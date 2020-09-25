@@ -33,6 +33,16 @@ resource "digitalocean_droplet" "example" {
   ]
 }
 
+resource "digitalocean_droplet" "example" {
+  image    = "debian-10-x64"
+  name     = "foo"
+  region   = "fra1"
+  size     = "s-1vcpu-1gb"
+  ssh_keys = [
+    data.digitalocean_ssh_key.default.fingerprint
+  ]
+}
+
 resource "digitalocean_record" "example" {
   domain = data.digitalocean_domain.default.name
   type   = "A"
@@ -40,6 +50,18 @@ resource "digitalocean_record" "example" {
   value  = digitalocean_droplet.example.ipv4_address
 }
 
+resource "digitalocean_record" "foo" {
+  domain = data.digitalocean_domain.default.name
+  type   = "A"
+  name   = digitalocean_droplet.foo.name
+  value  = digitalocean_droplet.foo.ipv4_address
+}
+
 output "domain" {
   value = digitalocean_record.example.fqdn
+}
+
+
+output "domain_foo" {
+  value = digitalocean_record.foo.fqdn
 }
