@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "example" {
   ]
 }
 
-resource "digitalocean_droplet" "example" {
+resource "digitalocean_droplet" "foo" {
   image    = "debian-10-x64"
   name     = "foo"
   region   = "fra1"
